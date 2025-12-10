@@ -16,7 +16,7 @@ connectDB();
 /*CORS MIDDLEWARE - MUST BE BEFORE ROUTES */
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // your Vite frontend in dev
+    origin: ["http://localhost:5173", "https://mern-chat-app-he6z.onrender.com" ], // your Vite frontend in dev
     credentials: true, // safe even if you don't use cookies
   })
 );
