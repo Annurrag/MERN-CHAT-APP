@@ -11,56 +11,6 @@ const ChatWindow = ({ chatId, onBack }) => {
 
   const { selectedChat } = ChatState();
 
-  const currentChat = {
-    id: "1",
-    name: "Design Team",
-    isGroup: true,
-    isOnline: true,
-    memberCount: 8,
-  };
-
-  const messages = [
-    {
-      id: "1",
-      content:
-        "Hey everyone! Just uploaded the new design mockups to Figma. Would love to get your feedback by EOD.",
-      timestamp: "2:30 PM",
-      isOwn: false,
-      senderName: "Sarah Wilson",
-      senderAvatar: "",
-    },
-    {
-      id: "2",
-      content: "Looks great! I'll review them this afternoon.",
-      timestamp: "2:32 PM",
-      isOwn: true,
-    },
-    {
-      id: "3",
-      content:
-        "Perfect timing! I was just thinking about the user flow for the onboarding process.",
-      timestamp: "2:35 PM",
-      isOwn: false,
-      senderName: "Alex Chen",
-      senderAvatar: "",
-    },
-    {
-      id: "4",
-      content:
-        "Should we schedule a quick review meeting for tomorrow morning?",
-      timestamp: "2:40 PM",
-      isOwn: true,
-    },
-    {
-      id: "5",
-      content: "That sounds perfect! I'll send out a calendar invite.",
-      timestamp: "2:42 PM",
-      isOwn: false,
-      senderName: "Sarah Wilson",
-      senderAvatar: "",
-    },
-  ];
-
   if (!chatId) {
     return (
       <div className="flex-1 flex flex-col bg-white">

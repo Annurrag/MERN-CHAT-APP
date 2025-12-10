@@ -8,9 +8,18 @@ const messageRoutes = require("./Routes/messageRoutes.js");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db.js");
 const { notFound, errorHandler } = require("./middlewares/errorMiddlewares.js");
+const cors = require("cors");
 const app = express();
 dotenv.config();
 connectDB();
+
+/*CORS MIDDLEWARE - MUST BE BEFORE ROUTES */
+app.use(
+  cors({
+    origin: ["http://localhost:5173"], // your Vite frontend in dev
+    credentials: true, // safe even if you don't use cookies
+  })
+);
 
 app.use(express.json()); // to accept json data
 
@@ -29,7 +38,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(5000, ()=>{
-    console.log("Server is running on port 5000");
+    console.log(`Server is running on port ${PORT}`);
 })
 
 const io = require("socket.io")(server, {

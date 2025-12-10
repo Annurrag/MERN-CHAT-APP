@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { ChatState } from "../context/ChatProvider";
 import UserListItem from "./UserAvatar/UserListItem";
 import { config } from "dotenv";
+import { api } from "../api";
 
 const CreateGroupModal = ({ isOpen, onClose }) => {
   const [groupName, setGroupName] = useState("");
@@ -33,7 +34,7 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${query}`, config);
+      const { data } = await api.get(`/api/user?search=${query}`, config);
       console.log(data);
 
       setSearchResult(data);
@@ -70,7 +71,7 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(
+      const { data } = await api.post(
         "/api/chat/group",
         {
           name: groupName,

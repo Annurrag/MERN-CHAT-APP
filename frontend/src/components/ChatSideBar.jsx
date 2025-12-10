@@ -9,6 +9,7 @@ import UserListItem from "./UserAvatar/UserListItem";
 import { ChatState } from "../context/ChatProvider";
 import MyChats from "./UserAvatar/MyChats";
 import { toast } from "react-toastify";
+import { api } from "../api";
 
 const ChatSideBar = ({
   onChatSelect,
@@ -44,7 +45,7 @@ const ChatSideBar = ({
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await api.get("/api/chat", config);
       setChats(data);
       setLoading(false);
     } catch (error) {
@@ -86,7 +87,7 @@ const ChatSideBar = ({
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post("/api/chat", { userId }, config);
+      const { data } = await api.post("/api/chat", { userId }, config);
 
       //Add new chats only if it's not already in list
       if (!chats.find((c) => c._id === data._id)) {
@@ -118,10 +119,7 @@ const ChatSideBar = ({
         },
       };
 
-      const { data } = await axios.get(
-        `/api/user?search=${searchQuery}`,
-        config
-      );
+      const { data } = await api.get(`/api/user?search=${searchQuery}`, config);
       setSearchResult(data);
       setLoading(false);
       console.log(data);

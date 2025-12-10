@@ -4,6 +4,7 @@ import { RxAvatar } from "react-icons/rx";
 import axios from "axios";
 import { getSender } from "../../config/ChatLogics";
 import { toast } from "react-toastify";
+import { api } from "../../api";
 
 const MyChats = ({ searchActive, fetchAgain, onChatSelect }) => {
   const { user, chats, setChats, selectedChat, setSelectedChat } = ChatState();
@@ -17,7 +18,7 @@ const MyChats = ({ searchActive, fetchAgain, onChatSelect }) => {
       const config = {
         headers: { Authorization: `Bearer ${user.token}` },
       };
-      const { data } = await axios.get("/api/chat", config);
+      const { data } = await api.get("/api/chat", config);
       setChats(data);
     } catch (error) {
       toast.error("Failed to load chats!");

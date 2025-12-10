@@ -13,8 +13,10 @@ import ScrollableChat from "./ScrollableChat";
 import io from "socket.io-client";
 import Lottie from "lottie-react";
 import animationData from "../animations/typing.json";
+import { api, SOCKET_URL } from "../api";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = SOCKET_URL;
+// const ENDPOINT = "http://localhost:5000";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
@@ -46,7 +48,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
         },
       };
 
-      const { data } = await axios.get(
+      const { data } = await api.get(
         `/api/message/${selectedChat._id}`,
         config
       );
@@ -75,7 +77,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
           },
         };
         setNewMessage("");
-        const { data } = await axios.post(
+        const { data } = await api.post(
           "/api/message",
           {
             content: newMessage,

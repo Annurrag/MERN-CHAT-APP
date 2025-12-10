@@ -31,12 +31,6 @@ const UserListItem = ({ user, handleFunction }) => {
         </div>
         <div className="flex items-center justify-between">
           <p className="text-sm text-gray-600 truncate">{user.email}</p>
-
-          {/* {user.unreadCount > 0 && (
-            <span className="ml-2 px-2 py-0.5 text-xs bg-indigo-500 text-white rounded-full">
-              {user.unreadCount}
-            </span>
-          )} */}
         </div>
       </div>
     </div>

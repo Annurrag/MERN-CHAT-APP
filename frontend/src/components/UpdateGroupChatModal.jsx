@@ -5,6 +5,7 @@ import { ChatState } from "../context/ChatProvider";
 import { toast } from "react-toastify";
 import axios from "axios";
 import UserListItem from "./UserAvatar/UserListItem";
+import { api } from "../api";
 
 const UpdateGroupChatModal = ({
   fetchAgain,
@@ -43,7 +44,7 @@ const UpdateGroupChatModal = ({
         },
       };
 
-      const { data } = await axios.put(
+      const { data } = await api.put(
         "/api/chat/groupremove",
         {
           chatId: selectedChat._id,
@@ -85,7 +86,7 @@ const UpdateGroupChatModal = ({
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.put(
+      const { data } = await api.put(
         "/api/chat/groupadd",
         {
           chatId: selectedChat._id,
@@ -111,7 +112,7 @@ const UpdateGroupChatModal = ({
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.put(
+      const { data } = await api.put(
         "/api/chat/rename",
         {
           chatId: selectedChat._id,
@@ -148,7 +149,7 @@ const UpdateGroupChatModal = ({
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${query}`, config);
+      const { data } = await api.get(`/api/user?search=${query}`, config);
       console.log(data);
 
       setSearchResult(data);
