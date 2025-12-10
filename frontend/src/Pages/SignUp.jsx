@@ -7,6 +7,7 @@ import bg from "../assets/bgimage.jpg";
 // import { useHistory } from "react-router-dom";  previous react-router-dom version 5
 import { useNavigate } from "react-router-dom"; // updated for react-router-dom version 6
 import axios from "axios";
+import { api } from "../api";
 
 const SignUp = ({ onToggle }) => {
   const [name, setName] = useState("");
@@ -46,7 +47,7 @@ const SignUp = ({ onToggle }) => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.post(
+      const { data } = await api.post(
         "/api/user",
         { name, email, password },
         config

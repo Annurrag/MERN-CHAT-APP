@@ -5,6 +5,7 @@ import bg from "../assets/bgimage.jpg";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { api } from "../api";
 // const axios = require("axios");
 
 const Login = ({ onToggle }) => {
@@ -32,7 +33,7 @@ const Login = ({ onToggle }) => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.post(
+      const { data } = await api.post(
         "/api/user/login",
         { email, password },
         config
