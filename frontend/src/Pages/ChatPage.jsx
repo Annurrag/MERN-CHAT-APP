@@ -46,6 +46,7 @@ const ChatPage = () => {
       >
         <ChatSideBar
           onChatSelect={(chat) => {
+            setSelectedChat(chat);
             if (window.innerWidth < 768) {
               setIsSidebarOpen(false);
             }

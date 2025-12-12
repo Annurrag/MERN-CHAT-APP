@@ -70,6 +70,9 @@ const allUsers = asyncHandler(async (req, res) => {
     : {};
 
     const users = await User.find(keyword).find({_id: {$ne: req.user._id}});
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
     res.send(users);
 });
     

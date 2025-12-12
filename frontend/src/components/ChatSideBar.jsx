@@ -31,7 +31,7 @@ const ChatSideBar = ({
   //from ChatState
   const { user, chats, setChats } = ChatState();
 
-  // console.log("🧠 User from ChatState:", user);
+  // console.log(" User from ChatState:", user);
 
   //fetch chats
   const fetchChats = async () => {
@@ -103,6 +103,7 @@ const ChatSideBar = ({
       return data;
     } catch (error) {
       console.error("Error fetching the chats:", error.message);
+      toast.error("Failed to access chat");
       return null;
     } finally {
       setLoading(false);
@@ -218,6 +219,7 @@ const ChatSideBar = ({
                   handleFunction={async () => {
                     const chat = await accessChat(user._id);
                     onChatSelect(chat);
+                    
                   }}
                 />
               ))}
