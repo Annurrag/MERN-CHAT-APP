@@ -65,9 +65,9 @@ const SignUp = ({ onToggle }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-4">
-      <div className="w-full  max-w-6xl h-[100vh] flex rounded-xl shadow-2xl overflow-hidden bg-white">
+      <div className="w-full max-w-6xl h-auto md:h-[100vh] flex flex-col md:flex-row rounded-xl shadow-2xl overflow-hidden bg-white">
         {/* Left side - Form */}
-        <div className="flex-1 flex items-center justify-center p-8 bg-white">
+        <div className="w-full md:flex-1 flex items-center justify-center p-8 bg-white">
           <div className="w-full max-w-md">
             <h3 className="text-3xl text-gray-700 mb-2 font-bold">
               Welcome to ChatApp
@@ -207,7 +207,7 @@ const SignUp = ({ onToggle }) => {
         {/* Right side - Background Image */}
 
         <div
-          className="flex-1 flex items-center justify-center bg-cover bg-center"
+          className="hidden md:flex md:flex-1 items-center justify-center bg-cover bg-center"
           style={{ backgroundImage: `url(${bg})` }}
         >
           <div className="text-center text-white p-8">
