@@ -24,7 +24,7 @@ const ChatPage = () => {
   const user = JSON.parse(localStorage.getItem("userInfo"));
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[linear-gradient(135deg,_#f8efe8_0%,_#f4e9dc_100%)] text-slate-800">
+    <div className="flex h-dvh overflow-hidden bg-[linear-gradient(135deg,_#f8efe8_0%,_#f4e9dc_100%)] text-slate-800">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div
@@ -35,7 +35,7 @@ const ChatPage = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-full max-w-[360px] border-r border-slate-200 bg-white shadow-lg transition-transform duration-300 ease-in-out md:relative md:w-80 md:shadow-none ${
+        className={`fixed inset-y-0 left-0 right-0 z-50 w-full border-r border-slate-200 bg-white shadow-lg transition-transform duration-300 ease-in-out md:relative md:right-auto md:w-80 md:shadow-none ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
