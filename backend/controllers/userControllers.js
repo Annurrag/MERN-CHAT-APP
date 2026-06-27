@@ -3,7 +3,7 @@ const User = require("../models/userModel.js");
 const asyncHandler = require("express-async-handler");
 
 const registerUser = asyncHandler(async(req,res)=>{
-    const {name,email,password} = req.body;
+    const {name,email,password,pic} = req.body;
 
     if(!name || !email || !password){
         res.status(400);
@@ -21,7 +21,7 @@ const registerUser = asyncHandler(async(req,res)=>{
         name,
         email,
         password,
-        // pic,
+        pic,
     });
 
     if(user){
@@ -29,7 +29,7 @@ const registerUser = asyncHandler(async(req,res)=>{
             _id: user._id,
             name: user.name,
             email: user.email,
-            // pic: user.pic,
+            pic: user.pic,
             token: generateToken(user._id),
         });
     }else{
@@ -60,6 +60,31 @@ const authUser = asyncHandler(async(req,res)=>{
 });
 
 //query parameter is used to search users
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const { pic } = req.body;
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+        res.status(404);
+        throw new Error("User not found");
+    }
+
+    if (pic !== undefined) {
+        user.pic = pic;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        pic: updatedUser.pic,
+        token: generateToken(updatedUser._id),
+    });
+});
+
 const allUsers = asyncHandler(async (req, res) => {
     const keyword = req.query.search ? {
         $or: [
@@ -78,4 +103,4 @@ const allUsers = asyncHandler(async (req, res) => {
     
     
 
-module.exports = {registerUser, authUser ,allUsers}
+module.exports = {registerUser, authUser, allUsers, updateUserProfile}

@@ -64,18 +64,25 @@ const SignUp = ({ onToggle }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl h-auto md:h-[100vh] flex flex-col md:flex-row rounded-xl shadow-2xl overflow-hidden bg-white">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(244,180,114,0.25),_transparent_30%),linear-gradient(135deg,_#f8efe8_0%,_#f2e4d7_100%)] flex items-center justify-center px-3 py-3 sm:px-4 sm:py-4 lg:px-6">
+      <div className="w-full max-w-6xl flex flex-col md:flex-row rounded-2xl shadow-2xl overflow-hidden bg-white">
         {/* Left side - Form */}
-        <div className="w-full md:flex-1 flex items-center justify-center p-8 bg-white">
+        <div className="w-full md:flex-1 flex items-center justify-center px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6 bg-white">
           <div className="w-full max-w-md">
-            <h3 className="text-3xl text-gray-700 mb-2 font-bold">
-              Welcome to ChatApp
-            </h3>
-            <p className="text-gray-600 mb-6">Sign Up to connect with others</p>
+            <div className="flex items-center justify-center md:justify-start gap-3 mb-4 sm:mb-5">
+              <img src="/chat-logo.svg" alt="Kataru logo" className="h-10 w-10 sm:h-12 sm:w-12" />
+              <div>
+                <h3 className="text-2xl sm:text-3xl text-gray-700 font-bold leading-tight">
+                  Kataru
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600">
+                  Sign up to connect with others
+                </p>
+              </div>
+            </div>
 
             {/* Social media buttons */}
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 mb-4 sm:mb-5">
               <button className="flex items-center justify-center gap-2 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                 <FcGoogle className="text-xl" />
                 <span className="text-sm font-medium">Google</span>
@@ -87,15 +94,15 @@ const SignUp = ({ onToggle }) => {
             </div>
 
             {/* Divider */}
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-4 sm:mb-5">
               <div className="flex-grow border-t border-gray-300"></div>
               <span className="text-gray-500 text-sm">or</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
 
-            <form onSubmit={submitHandler} className="space-y-6">
+            <form onSubmit={submitHandler} className="space-y-3 sm:space-y-4">
               {/* First name last name field */}
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="block text-gray-700 mb-2 font-medium">
                     First Name
@@ -185,7 +192,7 @@ const SignUp = ({ onToggle }) => {
                 // isloading={loading}  for chakra ui
                 disabled={loading}
                 type="submit"
-                className="w-full bg-amber-600 text-white font-bold rounded-lg py-3 hover:bg-amber-700 transition-colors"
+                className="w-full bg-amber-600 text-white font-bold rounded-lg py-2.5 hover:bg-amber-700 transition-colors"
               >
                 {/* Sign up */}
                 {loading ? "Signing up..." : "Sign up"}

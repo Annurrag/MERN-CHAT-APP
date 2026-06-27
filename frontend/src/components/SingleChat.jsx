@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/ChatProvider";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { getSender } from "../config/ChatLogics";
-import { RxAvatar } from "react-icons/rx";
 import { TiGroup } from "react-icons/ti";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import { FaEdit } from "react-icons/fa";
@@ -36,6 +35,16 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
     loop: true,
     autoplay: true,
     animationData,
+  };
+
+  // Helper function to get two-letter initials from a name
+  const getInitials = (name) => {
+    if (!name) return "U";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return (name[0] + name[1] || name[0]).toUpperCase();
   };
 
   //fetch all messages for selected chat
@@ -176,9 +185,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
   return (
     <>
       {selectedChat ? (
-        <div className="flex flex-col h-screen w-full bg-[#F7F8FA] ">
-          {/* Header */}
-          <div className="flex items-center justify-between w-full px-4 py-3 border-b border-gray-200 bg-gray-150">
+        <div className="flex flex-col h-full w-full bg-slate-50">
+          <div className="flex items-center justify-between w-full px-3 sm:px-4 py-3 border-b border-slate-200 bg-white/90 backdrop-blur">
             {/* Back Button (mobile only) */}
             <button
               onClick={() => setSelectedChat("")}
@@ -194,7 +202,26 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
             <div className="flex items-center gap-3 flex-1">
               {!selectedChat.isGroupChat ? (
                 <>
-                  <RxAvatar className="h-10 w-10 text-gray-700" />
+                  {(() => {
+                    const otherUser = selectedChat.users.find(
+                      (u) => u._id !== user._id
+                    );
+                    if (otherUser?.pic) {
+                      return (
+                        <img
+                          src={otherUser.pic}
+                          alt={otherUser.name}
+                          className="h-10 w-10 rounded-full object-cover border-2 border-white"
+                        />
+                      );
+                    } else {
+                      return (
+                        <div className="h-10 w-10 rounded-full bg-[#d8b78b] flex items-center justify-center text-white text-xs font-semibold border-2 border-white">
+                          {getInitials(otherUser?.name || "U")}
+                        </div>
+                      );
+                    }
+                  })()}
                 </>
               ) : (
                 <>
@@ -202,7 +229,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
                 </>
               )}
 
-              <h2 className="text-xl font-semibold text-gray-800 font-[Work Sans]">
+              <h2 className="text-base sm:text-lg font-semibold text-slate-800 truncate">
                 {!selectedChat.isGroupChat ? (
                   getSender(user, selectedChat.users).toUpperCase()
                 ) : (
@@ -213,7 +240,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
             {selectedChat.isGroupChat && (
               <button
                 onClick={() => setIsUpdateGroupModalOpen(true)}
-                className="px-4 py-2 bg-indigo-300 text-white rounded-md hover:bg-indigo-700"
+                className="p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
               >
                 <FaEdit className="w-5 h-5 text-gray-700 " />
               </button>
@@ -228,7 +255,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
             <>
               {/* <div className="flex-1 overflow-y-auto px-4 pt-4 pb-0 bg-[#F7F8FA]"> */}
 
-              <div className="flex-1 overflow-y-auto px-4 py-2 bg-[#F7F8FA]">
+              <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-3 bg-[radial-gradient(circle_at_top_left,_rgba(226,232,240,0.35),_transparent_55%)]">
                 <ScrollableChat messages={messages} />
               </div>
             </>
@@ -237,7 +264,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
           {/* Input Area */}
           <div
             // className=" border-t border-gray-200 bg-[#F7F8FA] px-3 py-2"
-            className="p-3 border-t border-gray-200 bg-[#F7F8FA]"
+            className="border-t border-slate-200 bg-white/90 px-3 py-3 sm:px-4"
             isrequired="true"
           >
             {isTyping ? (
@@ -253,7 +280,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
               onChange={typingHandler}
               value={newMessage}
               onKeyDown={sendMessage}
-              className="w-full px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2.5 rounded-full border border-slate-200 bg-slate-50 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300"
             />
           </div>
           {/*  Update Group Modal */}
@@ -269,10 +296,15 @@ const SingleChat = ({ fetchAgain, setFetchAgain, onBack }) => {
         </div>
       ) : (
         // Default View when no chat is selected
-        <div className="flex items-center justify-center h-full text-center">
-          <p className="text-2xl text-gray-400 font-[Work Sans] px-4">
-            Click on a user to start chatting
-          </p>
+        <div className="flex items-center justify-center h-full text-center px-4">
+          <div className="max-w-md rounded-2xl border border-[#eadfce] bg-white/80 p-6 shadow-sm">
+            <p className="text-xl font-semibold text-[#6b4f2f]">
+              Welcome to Kataru
+            </p>
+            <p className="mt-2 text-sm text-slate-600">
+              Connect with friends and family in a warm, simple chat space.
+            </p>
+          </div>
         </div>
       )}
     </>

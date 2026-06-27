@@ -96,9 +96,9 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
         onClick={onClose}
       ></div>
       {/* Modal Box  */}
-      <div className="relative bg-white rounded-2xl shadow-lg max-w-lg w-full mx-4 max-h-[90vh] flex flex-col">
+      <div className="relative bg-[#fcf7f2] rounded-2xl shadow-lg max-w-lg w-full mx-4 max-h-[90vh] flex flex-col border border-[#eadfce]">
         {/* header  */}
-        <div className="flex justify-between items-center p-6 border-b">
+        <div className="flex justify-between items-center p-6 border-b border-[#eadfce]">
           <h2 className="text-xl font-semibold">Create New Group</h2>
           <button
             onClick={onClose}
@@ -112,8 +112,8 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
           {/* Group Info  */}
           <div className="space-y-4">
             <div className="flex items-center gap-4">
-              <div className="h-16 w-16 bg-indigo-500 rounded-2xl flex items-center justify-center ">
-                <FaUsers className="h-8 w-8" />
+              <div className="h-16 w-16 bg-[#f3e4d3] rounded-2xl flex items-center justify-center border border-[#d8b78b]">
+                <FaUsers className="h-8 w-8 text-[#6b4f2f]" />
               </div>
               <div className="flex-1 space-y-2">
                 <label htmlFor="" className="block text-sm font-medium">
@@ -124,7 +124,7 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
                   placeholder="Enter Group Name..."
                   value={groupName}
                   onChange={(e) => setGroupName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-md border focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                  className="w-full px-3 py-2 rounded-md border border-[#eadfce] bg-white focus:ring-2 focus:ring-[#d8b78b] focus:outline-none"
                 />
               </div>
             </div>
@@ -139,7 +139,7 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
                     return (
                       <span
                         key={u._id}
-                        className="flex items-center gap-2 px-3 py-1 bg-indigo-100 rounded-full text-sm text-indigo-700"
+                        className="flex items-center gap-2 px-3 py-1 bg-orange-100 rounded-full text-sm text-black-300 text-bold border border-[#eadfce]"
                       >
                         <img
                           src={
@@ -152,7 +152,7 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
                         {u.name}
                         <button
                           onClick={() => handleRemoveUser(u._id)}
-                          className="hover:text-red-500"
+                          className="hover:text-orange-500"
                         >
                           <MdOutlineCancel className="h-4 w-4" />
                         </button>
@@ -176,7 +176,7 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
                 type="text"
                 placeholder="Search Contacts..."
                 onChange={(e) => handleSearch(e.target.value)}
-                className="w-full pl-10 pr-3 py-2 rounded-md border focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="w-full pl-10 pr-3 py-2 rounded-md border border-[#eadfce] bg-white focus:ring-2 focus:ring-[#d8b78b] focus:outline-none"
               />
             </div>
           </div>
@@ -188,7 +188,7 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
                 key={user._id}
                 user={user}
                 onClick={() => handleUsersToggle(user)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition"
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#f9f2e8] cursor-pointer transition border border-transparent hover:border-[#eadfce]"
               >
                 <input
                   type="checkbox"
@@ -220,17 +220,17 @@ const CreateGroupModal = ({ isOpen, onClose }) => {
 
         {/* Footer  */}
 
-        <div className="flex gap-3 p-6 border-t">
+        <div className="flex gap-3 p-6 border-t border-[#eadfce] bg-[#f9f2e8] rounded-b-2xl">
           <button
             onClick={onClose}
-            className="flex-1 px-4 py-2 rounded-md border hover:bg-gray-100"
+            className="flex-1 px-4 py-2 rounded-md border border-[#eadfce] hover:bg-[#f9f2e8]"
           >
             Cancel
           </button>
           <button
             onClick={handleCreateGroup}
             // disabled={!groupName.trim() || selectedContacts.length === 0}
-            className="flex-1 px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-4 py-2 rounded-md bg-orange-400 text-white hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Create Group
           </button>

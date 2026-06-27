@@ -36,8 +36,10 @@ const ChatSideBar = ({
   //fetch chats
   const fetchChats = async () => {
     if (!user || !user.token) {
-      console.log("loading...");
+      setLoading(false);
+      return;
     }
+
     setLoading(true);
     try {
       const config = {
@@ -46,11 +48,12 @@ const ChatSideBar = ({
         },
       };
       const { data } = await api.get("/api/chat", config);
-      setChats(data);
-      setLoading(false);
+      setChats(Array.isArray(data) ? data : []);
     } catch (error) {
-      toast.error("Error fetching chats");
       console.error("Error fetching chats", error.message);
+      setChats([]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,11 +61,12 @@ const ChatSideBar = ({
     if (user && user.token) {
       fetchChats();
     }
-  }, [user]);
+  }, [user, fetchAgain]);
 
   useEffect(() => {
-    //  re-fetch chats if a new one was created elsewhere
-    fetchChats();
+    if (user && user.token) {
+      fetchChats();
+    }
   }, [chats.length]);
 
   useEffect(() => {
@@ -142,12 +146,15 @@ const ChatSideBar = ({
   }, [searchQuery]);
 
   return (
-    <div className="w-full md:w-80 bg-white border-r border-gray-300 flex flex-col h-full">
+    <div className="w-full md:w-80 bg-[#fcf7f2] border-r border-[#e8dbca] flex flex-col h-full">
       {/* Header */}
       <div className="p-4 border-b border-gray-300">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl font-semibold">Messages</h1>
-          <div className="flex gap-2">
+        <div className="flex items-center justify-between mb-4 gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <img src="/chat-logo.svg" alt="Kataru logo" className="h-8 w-8 sm:h-9 sm:w-9 shrink-0" />
+            <h1 className="text-lg sm:text-xl font-semibold truncate">Kataru</h1>
+          </div>
+          <div className="flex gap-2 shrink-0">
             <button
               onClick={onCreateGroup}
               className="h-10 w-10 flex items-center justify-center hover:bg-indigo-100 rounded-md"

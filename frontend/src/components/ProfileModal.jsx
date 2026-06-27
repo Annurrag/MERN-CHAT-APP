@@ -1,11 +1,53 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { MdOutlineCancel } from "react-icons/md";
-import { FaCamera, FaRegEdit } from "react-icons/fa";
+import { FaCamera } from "react-icons/fa";
 import { ChatState } from "../context/ChatProvider";
+import { api } from "../api";
 
 const ProfileModal = ({ isOpen, onClose }) => {
-  const { user } = ChatState();
+  const { user, setUser } = ChatState();
+  const fileInputRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [previewUrl, setPreviewUrl] = useState(user?.pic || "");
+  const [saving, setSaving] = useState(false);
+
   if (!isOpen) return null;
+
+  const handleImagePick = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === "string" ? reader.result : "";
+      setSelectedImage(result);
+      setPreviewUrl(result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleConfirmPicture = async () => {
+    if (!selectedImage) return;
+
+    try {
+      setSaving(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
+      };
+      const { data } = await api.put("/api/user/profile", { pic: selectedImage }, config);
+      const updatedUser = { ...user, ...data };
+      setUser(updatedUser);
+      localStorage.setItem("userInfo", JSON.stringify(updatedUser));
+      setPreviewUrl(data.pic || selectedImage);
+      setSelectedImage("");
+    } catch (error) {
+      console.error("Failed to update profile picture", error);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center ">
@@ -32,13 +74,43 @@ const ProfileModal = ({ isOpen, onClose }) => {
           {/* Avatar  */}
           <div className="flex flex-col items-center space-y-4">
             <div className="relative">
-              <div className="h-24 w-24 rounded-full bg-indigo-500 flex items-center justify-center text-white text-2xl font-semibold">
-                {user.name.charAt(0)}
-              </div>
-              <button className="absolute -bottom-2 -right-2 bg-gray-100 rounded-full p-2 shadow-md hover:bg-gray-200">
-                <FaCamera className="h-4 w-4" />
+              {previewUrl ? (
+                <img
+                  src={previewUrl}
+                  alt={user?.name || "Profile"}
+                  className="h-24 w-24 rounded-full object-cover border-4 border-white shadow-md"
+                />
+              ) : (
+                <div className="h-24 w-24 rounded-full bg-[#f3e4d3] flex items-center justify-center text-[#6b4f2f] text-2xl font-semibold border-4 border-white shadow-md">
+                  {user?.name?.charAt(0) || "U"}
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="absolute -bottom-2 -right-2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
+              >
+                <FaCamera className="h-4 w-4 text-[#6b4f2f]" />
               </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImagePick}
+              />
             </div>
+
+            {selectedImage && (
+              <button
+                type="button"
+                onClick={handleConfirmPicture}
+                disabled={saving}
+                className="rounded-full bg-[#6b4f2f] px-4 py-2 text-sm font-semibold text-white hover:bg-[#553a23] disabled:opacity-60"
+              >
+                {saving ? "Saving..." : "Confirm Picture"}
+              </button>
+            )}
 
             {/* Fix the status bar ..... */}
 

@@ -15,7 +15,7 @@ const ScrollableChat = ({ messages }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-[2px] justify-end w-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-thin overflow-y-auto">
+      <div className="flex flex-col gap-[2px] justify-end w-full scrollbar-thumb-slate-300 scrollbar-track-transparent scrollbar-thin overflow-y-auto">
         {messages &&
           messages.map((m, i) => (
             <div
@@ -25,8 +25,8 @@ const ScrollableChat = ({ messages }) => {
               }`}
             >
               <span
-                className={`inline-block px-2 py-2 rounded-2xl max-w-[75%]
-      ${m.sender._id === user._id ? "bg-blue-100" : "bg-green-100"}
+                className={`inline-block px-3.5 py-2.5 rounded-2xl max-w-[80%] text-sm leading-6 shadow-sm
+      ${m.sender._id === user._id ? "bg-slate-900 text-white" : "bg-white text-slate-700 border border-slate-200"}
       ${isSameUser(messages, m, i, user._id) ? "mt-[3px]" : "mt-[10px]"}
     `}
                 style={{
